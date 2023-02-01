@@ -98,7 +98,7 @@ export const retrieveUser = (req,res) => {
         message: "Unauthorized"
       });
     }
-
+    //Close DB connection
     connection.release();
   });
 }
