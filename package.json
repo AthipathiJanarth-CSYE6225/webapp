@@ -1,0 +1,39 @@
+{
+  "name": "web-services",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/.bin/jest --forceExit",
+    "prod": "pm2 start app.js",
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.1",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.3",
+    "email-validator": "^2.0.4",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.0.1",
+    "pm2": "^5.2.2",
+    "pug": "2.0.0-beta11",
+    "supertest": "^6.3.3"
+  },
+  "devDependencies": {
+    "jest": "^29.4.1",
+    "nodemon": "^2.0.20"
+  },
+  "jest": {
+    "rootDir": "./",
+    "modulePaths": [
+      "<rootDir>"
+    ],
+    "bail": true
+  }
+}
