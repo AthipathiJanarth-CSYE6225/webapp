@@ -17,4 +17,4 @@
 - To run the project use `npm run start`
 - Perform the change and push it to your branch
 - Create a pull request to `main`, the Github actions will run 
-- Once the Actions and the test case passes, you can merge the branch to main 
+
