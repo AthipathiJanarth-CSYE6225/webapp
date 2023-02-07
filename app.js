@@ -1,16 +1,13 @@
 import createError  from 'http-errors';
 import express from 'express';
-import path from 'path' ;
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-import pool from './utils/databaseConnection.js';
-
 import indexRouter from './routes/server.js';
+import connectDatabase from "./utils/connectDatabase.js";
 
-/*pool.getConnection((err, connection) => {
-  if (err) throw err;
-  console.log("connected as id " + connection.threadId);
-});*/
+(async () => {
+  await connectDatabase();
+})();
 
 var app = express();
 
@@ -39,7 +36,7 @@ app.get("/healthz", (req, res) => {
 // });
 
 app.listen(5002,()=>{
-  console.log("connected")
+  console.log("Application is Running on Port 5002");
 })
 
 export default app;

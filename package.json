@@ -23,6 +23,7 @@
     "mysql2": "^3.0.1",
     "pm2": "^5.2.2",
     "pug": "2.0.0-beta11",
+    "sequelize": "^6.28.0",
     "supertest": "^6.3.3"
   },
   "devDependencies": {
