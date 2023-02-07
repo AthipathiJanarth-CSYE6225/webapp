@@ -6,13 +6,13 @@ const authentication = async (req, res, next) => {
         //If no authorization is present
         if (!req.get("authorization")) {
             return res
-                .status(403)
+                .status(401)
                 .json({message: "Enter username and password for authentication"});
         }
         //Empty name and password
         if (!authUser.name || !authUser.pass) {
             return res
-                .status(403)
+                .status(401)
                 .json({message: "Enter username and password for authentication"});
         }
         req.authUser = authUser;
