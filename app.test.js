@@ -3,7 +3,7 @@ import request from "supertest";
 import app from "app.js"
 import express from 'express';
 
-//var app=express();
+
 request(app);
 
 //Unit Test to check server status
@@ -14,7 +14,7 @@ describe("GET /", function () {
     });
 });
 
-/*describe("GET /", function () {
+describe("GET /", function () {
     test("Check if retrieve is not working without authentication", async function () {
         const response = await request(app).get("/v1/user/2");
         expect(response.status).toEqual(401);
@@ -28,7 +28,7 @@ describe("POST /", function () {
     });
 
 });
-describe("GET /", function () {
+/*describe("GET /", function () {
     test("Check if retrieve is not working without authentication", async function () {
         const response = await request(app).get("/v1/user/2").auth(" ","ç");
         expect(response.status).toEqual(401);

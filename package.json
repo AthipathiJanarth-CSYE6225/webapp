@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/.bin/jest --forceExit",
-    "prod": "pm2 start app.js",
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "prod": "pm2 start index.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
