@@ -52,7 +52,13 @@ export const createProduct = (req, res) => {
                                     "Bad Request:  Quantity can't be String ",
                             });
                         }
-                        if (-1 > quantity && quantity > 101) {
+                        if (0 > quantity) {
+                            return res.status(400).json({
+                                message:
+                                    "Bad Request:  Quantity can't be Negative or Above 100 ",
+                            });
+                        }
+                        if(quantity > 100){
                             return res.status(400).json({
                                 message:
                                     "Bad Request:  Quantity can't be Negative or Above 100 ",
@@ -268,7 +274,13 @@ export const updatesProduct = (req, res) => {
                                                 "Bad Request:  Quantity can't be String ",
                                         });
                                     }
-                                    else if (-1 > quantity && quantity > 101) {
+                                    else if (0 > quantity) {
+                                        return res.status(400).json({
+                                            message:
+                                                "Bad Request:  Quantity can't be Negative or Above 100 ",
+                                        });
+                                    }
+                                    else if(quantity > 100){
                                         return res.status(400).json({
                                             message:
                                                 "Bad Request:  Quantity can't be Negative or Above 100 ",
@@ -384,14 +396,20 @@ export const updateProduct = (req, res) => {
                                     console.log("Manufacturer Updating");
                                     product.manufacturer=manufacturer;
                                 }
-                                if(quantity.toString()){
+                                if(quantity || isNaN(quantity)){
                                     if(isNaN(quantity)){
                                         return res.status(400).json({
                                             message:
                                                 "Bad Request:  Quantity can't be String ",
                                         });
                                     }
-                                    else if (-1 > quantity && quantity > 101) {
+                                    else if (0 > quantity) {
+                                        return res.status(400).json({
+                                            message:
+                                                "Bad Request:  Quantity can't be Negative or Above 100 ",
+                                        });
+                                    }
+                                    else if(quantity > 100){
                                         return res.status(400).json({
                                             message:
                                                 "Bad Request:  Quantity can't be Negative or Above 100 ",
