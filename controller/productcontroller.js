@@ -46,10 +46,10 @@ export const createProduct = (req, res) => {
                                     "Bad Request: Required fields cannot be empty (Name, Description, Sku, Manufacturer, Quantity)",
                             });
                         }
-                        if(isNaN(quantity)){
+                        if(!Number.isInteger(quantity)){
                             return res.status(400).json({
                                 message:
-                                    "Bad Request:  Quantity can't be String ",
+                                    "Bad Request:  Quantity can't be String or Decimal",
                             });
                         }
                         if (0 > quantity) {
@@ -268,10 +268,10 @@ export const updatesProduct = (req, res) => {
                                     }
                                 }
                                 if(quantity.toString()){
-                                    if(isNaN(quantity)){
+                                    if(!Number.isInteger(quantity)){
                                         return res.status(400).json({
                                             message:
-                                                "Bad Request:  Quantity can't be String ",
+                                                "Bad Request:  Quantity can't be String or Decimal ",
                                         });
                                     }
                                     else if (0 > quantity) {
@@ -396,11 +396,11 @@ export const updateProduct = (req, res) => {
                                     console.log("Manufacturer Updating");
                                     product.manufacturer=manufacturer;
                                 }
-                                if(quantity || isNaN(quantity)){
-                                    if(isNaN(quantity)){
+                                if(quantity!==undefined){
+                                    if(!Number.isInteger(quantity)){
                                         return res.status(400).json({
                                             message:
-                                                "Bad Request:  Quantity can't be String ",
+                                                "Bad Request:  Quantity can't be String or Decimal",
                                         });
                                     }
                                     else if (0 > quantity) {
