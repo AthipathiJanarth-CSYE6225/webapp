@@ -396,7 +396,7 @@ export const updateProduct = (req, res) => {
                                     console.log("Manufacturer Updating");
                                     product.manufacturer=manufacturer;
                                 }
-                                if(quantity || isNaN(quantity)){
+                                if(quantity!==undefined){
                                     if(isNaN(quantity)){
                                         return res.status(400).json({
                                             message:
