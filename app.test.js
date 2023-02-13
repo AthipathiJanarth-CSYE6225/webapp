@@ -10,7 +10,7 @@ request(app);
 describe("GET /", function () {
     test("Check if API is working", async function () {
         const response = await request(app).get("/healthz");
-        expect(response.status).toEqual(201);
+        expect(response.status).toEqual(200);
     });
 });
 
