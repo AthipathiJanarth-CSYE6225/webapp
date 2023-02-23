@@ -1,0 +1,40 @@
+name: Packer Application Build
+on:
+  push:
+    branches: [main]
+env:
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_NAME: ${{ secrets.DB_NAME }}
+  AMI_USER: ${{ secrets.AMI_USER }}
+
+jobs:
+  packer-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: create env
+        run: echo "${{ secrets.WEBAPP_ENV }}" > .env
+
+      - name: display file
+        run: echo "version=$(cat .env)" >> $GITHUB_OUTPUT
+
+      - name: Clean install
+        run: npm ci
+
+      - name: Zip Files
+        run: zip -r webapp.zip .
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Packer Init
+        run: packer init .
+
+      - name: Packer Validate
+        run: packer validate .
+

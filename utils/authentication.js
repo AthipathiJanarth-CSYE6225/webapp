@@ -1,5 +1,5 @@
 import auth from "basic-auth";
-
+import User from "../models/User.js";
 const authentication = async (req, res, next) => {
     try {
         const authUser = auth(req);
@@ -7,7 +7,7 @@ const authentication = async (req, res, next) => {
         User.findOne({
             where: { username: authUser.name },
         }).then((user) => {
-            if(user){
+        if(user){
         if (!req.get("authorization")) {
             return res
                 .status(401)
@@ -27,6 +27,7 @@ const authentication = async (req, res, next) => {
             }
         });
     }catch (err) {
+        console.log(err);
         res.status(401).json({ message: "The user is not authorized" });
     }
 };
