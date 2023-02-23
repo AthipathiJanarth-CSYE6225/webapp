@@ -58,8 +58,8 @@ build {
   provisioner "shell" {
     script = "./app.sh"
     environment_vars = [
-      "DB_PASSWORD = {{secret `DB_PASSWORD`}}",
-      "DB_NAME = {{secret `DB_NAME`}}"
+      "DB_PASSWORD = {{env `DB_PASSWORD`}}",
+      "DB_NAME = {{env `DB_NAME`}}"
     ]
   }
 }
