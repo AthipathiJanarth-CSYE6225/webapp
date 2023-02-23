@@ -33,7 +33,7 @@ sudo yum install unzip -y
 cd ~/
 sudo mkdir -p webapp
 sudo chmod 755 webapp
-sudo unzip webapp.zip
+sudo unzip webapp.zip -d ~/webapp
 cd ~/webapp
 
 sudo mkdir -p ~/logs
