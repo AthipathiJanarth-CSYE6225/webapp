@@ -30,8 +30,11 @@ sudo systemctl enable mariadb
 sudo yum install unzip -y
 
 #Get inside the application
-cd ~/ && unzip webapp.zip
-cd ~/webapp 
+cd ~/
+sudo mkdir -p webapp
+sudo chmod 755 webapp
+sudo unzip webapp.zip
+cd ~/webapp
 
 sudo mkdir -p ~/logs
 #Start app using pm2
