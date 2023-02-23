@@ -19,6 +19,14 @@ variable "AWS_REGION" {
   type = string
   default = "us-east-1"
 }
+variables "DB_PASSWORD"{
+  type = string
+  default=""
+}
+variables "DB_NAME"{
+  type = string
+  default=""
+}
 
 locals {
   timestamp = regex_replace(timestamp(), "[- TZ:]", "")
@@ -57,9 +65,9 @@ build {
 
   provisioner "shell" {
     script = "./app.sh"
-    variables = [
-      "DB_PASSWORD = {{env`DB_PASSWORD`}}",
-      "DB_NAME = {{env `DB_NAME`}}"
+    environment_var = [
+      DB_PASSWORD,
+      DB_NAME
     ]
   }
 }
