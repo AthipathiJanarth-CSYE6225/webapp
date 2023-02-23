@@ -55,11 +55,12 @@ build {
     destination = "~/"
   }
 
-  provisioner "shell" {
-    script = "./app.sh"
-    environment_vars = [
-      "DB_PASSWORD = {{env `DB_PASSWORD`}}",
-      "DB_NAME = {{env `DB_NAME`}}"
-    ]
-  }
+  provisioners : [{
+    "type": "shell",
+    "script": "./app.sh",
+    "environment": {
+      "DB_PASSWORD": "{{ env `DB_PASSWORD` }}",
+      "DB_NAME": "{{ env `DB_NAME` }}"
+    }
+  }]
 }
