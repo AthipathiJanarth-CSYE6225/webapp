@@ -43,7 +43,6 @@ source "amazon-ebs" "webapp" {
     most_recent = true
     owners      = ["amazon"]
   }
-  # source_ami = "ami-013a129d325529d4d"
 
 
   instance_type = "t2.micro"
