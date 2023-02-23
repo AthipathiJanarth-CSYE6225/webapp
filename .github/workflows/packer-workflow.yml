@@ -14,6 +14,9 @@ jobs:
       - name: display file
         run: echo "version=$(cat .env)" >> $GITHUB_OUTPUT
 
+      - name: Clean install
+        run: npm ci
+
       - name: Zip Files
         run: zip -r webapp.zip .
 
