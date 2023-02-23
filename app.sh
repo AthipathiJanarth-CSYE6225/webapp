@@ -20,7 +20,7 @@ sudo yum install mariadb mariadb-server -y
 
 sudo systemctl start mariadb
 
-echo $.DB_PASSWORD
+echo $DB_PASSWORD
 sudo mysqladmin -u root password "mantra1@3"
 
 mysqladmin -u root --password=mantra1@3 --host=localhost --port=3306 create CSYE_6225

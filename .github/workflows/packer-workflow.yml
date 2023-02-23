@@ -34,4 +34,6 @@ jobs:
         run: packer validate .
 
       - name: Packer Build
+        with:
+          secret: ${{secrets.DB_PASSWORD}}
         run: packer build .

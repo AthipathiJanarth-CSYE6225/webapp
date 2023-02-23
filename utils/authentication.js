@@ -4,6 +4,10 @@ const authentication = async (req, res, next) => {
     try {
         const authUser = auth(req);
         //If no authorization is present
+        User.findOne({
+            where: { username: authUser.name },
+        }).then((user) => {
+            if(user){
         if (!req.get("authorization")) {
             return res
                 .status(401)
@@ -17,8 +21,13 @@ const authentication = async (req, res, next) => {
         }
         req.authUser = authUser;
         next();
-    } catch (err) {
-        res.status(404).json({ message: err.message });
+        }
+            else {
+                res.status(401).json({ message: "The user is not authorized" });
+            }
+        });
+    }catch (err) {
+        res.status(401).json({ message: "The user is not authorized" });
     }
 };
 
