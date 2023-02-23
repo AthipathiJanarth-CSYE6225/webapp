@@ -2,6 +2,9 @@ name: Packer Application Build
 on:
   pull_request:
     branches: [main]
+env:
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_NAME: ${{ secrets.DB_NAME }}
 jobs:
   packer-checks:
     runs-on: ubuntu-latest
@@ -26,10 +29,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
-
-      - name: Passing DB NAME
-        with:
-          secret: ${{secrets.DB_PASSWORD}}
 
       - name: Packer Init
         run: packer init .
