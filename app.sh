@@ -20,10 +20,10 @@ sudo yum install mariadb mariadb-server -y
 
 sudo systemctl start mariadb
 
-echo ${{ secrets.DB_PASSWORD }}
-sudo mysqladmin -u root password ${{ secrets.DB_PASSWORD }}
+echo $.DB_PASSWORD
+sudo mysqladmin -u root password $DB_PASSWORD
 
-mysqladmin -u root --password=${{ secrets.DB_PASSWORD }} --host=localhost --port=3306 create ${{ secrets.DB_NAME }}
+mysqladmin -u root --password=$DB_PASSWORD --host=localhost --port=3306 create $DB_NAME
 
 sudo systemctl enable mariadb
 
