@@ -244,7 +244,7 @@ export const updatesProduct = (req, res) => {
                                     });
                                 }
                                 //Check if all the required field are present
-                                if (!name || !description  || !sku  || !manufacturer || !quantity.toString()) {
+                                if (!name || !description  || !sku  || !manufacturer || quantity==undefined) {
                                     return res.status(400).json({
                                         message:
                                             "Bad Request: Update all of the field Name, Description, Sku, Manufacturer, Quantity",
