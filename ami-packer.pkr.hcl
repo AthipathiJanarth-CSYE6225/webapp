@@ -21,11 +21,11 @@ variable "AWS_REGION" {
 }
 variable "DB_PASSWORD" {
   type = string
-  default=env(DB_PASSWORD)
+  default= "${env("DB_PASSWORD")}"
 }
 variable "DB_NAME" {
   type = string
-  default=env(DB_NAME)
+  default= "${env("DB_NAME")}"
 }
 
 locals {
