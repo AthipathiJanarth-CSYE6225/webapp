@@ -27,6 +27,10 @@ variable "DB_NAME" {
   type = string
   default= "${env("DB_NAME")}"
 }
+variable "AMI_USER" {
+  type = string
+  default= "${env("AMI_USER")}"
+}
 
 locals {
   timestamp = regex_replace(timestamp(), "[- TZ:]", "")
@@ -48,7 +52,7 @@ source "amazon-ebs" "webapp" {
   instance_type = "t2.micro"
   region = var.AWS_REGION
   ssh_username = "ec2-user"
-  ami_users = ["052936583614"]
+  ami_users = [var.AMI_USER]
   access_key = var.AWS_ACCESS_KEY
   secret_key = var.AWS_SECRET_ACCESS_KEY
 }
