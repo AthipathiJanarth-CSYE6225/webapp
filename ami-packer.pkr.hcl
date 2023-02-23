@@ -19,11 +19,11 @@ variable "AWS_REGION" {
   type = string
   default = "us-east-1"
 }
-variables "DB_PASSWORD"{
+variables "DB_PASSWORD" {
   type = string
   default=""
 }
-variables "DB_NAME"{
+variables "DB_NAME" {
   type = string
   default=""
 }
