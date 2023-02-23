@@ -64,7 +64,7 @@ build {
   }
 
   provisioner "shell" {
-    script = "./app.sh"
+    /*script = "./app.sh"*/
     inline=[
     "echo $var.DB_PASSWORD",
       "echo $var.DB_NAME"]
