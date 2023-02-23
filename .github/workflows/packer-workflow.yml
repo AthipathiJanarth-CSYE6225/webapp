@@ -1,4 +1,4 @@
-name: Packer Application Build
+name: Packer Application Check
 on:
   pull_request:
     branches: [main]
@@ -38,5 +38,3 @@ jobs:
       - name: Packer Validate
         run: packer validate .
 
-      - name: Packer Build
-        run: packer build .
