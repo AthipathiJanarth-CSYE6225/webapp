@@ -64,11 +64,11 @@ build {
   }
 
   provisioner "shell" {
-    /*script = "./app.sh"*/
-    inline=[
+    script = "./app.sh"
+    /*inline=[
     "echo $var.DB_PASSWORD",
       "echo $var.DB_NAME"]
-    /*environment_vars = [
+    environment_vars = [
       'DB_PASSWORD=var.DB_PASSWORD',
       'DB_NAME=var.DB_NAME'
     ]*/
