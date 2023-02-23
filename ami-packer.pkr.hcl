@@ -54,12 +54,7 @@ build {
     source = "./webapp.zip"
     destination = "/home/ec2-user/webapp.zip"
   }
-
-  provisioner "file" {
-    source = "./webapp.service"
-    destination = "/tmp/webapp.service"
-  }
-
+  
   provisioner "shell" {
     script = "./app.sh"
   }
