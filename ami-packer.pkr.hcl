@@ -19,14 +19,6 @@ variable "AWS_REGION" {
   type = string
   default = "us-east-1"
 }
-variable "DB_PASSWORD" {
-  type = string
-  default= "${env("DB_PASSWORD")}"
-}
-variable "DB_NAME" {
-  type = string
-  default= "${env("DB_NAME")}"
-}
 variable "AMI_USER" {
   type = string
   default= "${env("AMI_USER")}"
@@ -68,9 +60,5 @@ build {
 
   provisioner "shell" {
     script = "./app.sh"
-    environment_vars = [
-      "DB_PASSWORD=${var.DB_PASSWORD}",
-      "DB_NAME=${var.DB_NAME}"
-    ]
   }
 }
