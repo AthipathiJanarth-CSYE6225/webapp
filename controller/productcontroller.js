@@ -3,6 +3,9 @@ import Product from "../models/Product.js";
 import bcrypt from "bcryptjs";
 import emailValidator from "email-validator";
 import product from "../models/Product.js";
+import Image from "../models/Image.js";
+import {Op} from "sequelize";
+import {deleteFile} from "../utils/s3Bucket.js";
 
 //POST - Create new Product
 export const createProduct = (req, res) => {
@@ -130,9 +133,9 @@ export const retrieveProduct = (req, res) => {
                 else {
                     return res.status(404).json({ message: "No such Product found" });
                 }
-        });
+            });
     }
-        catch (err) {
+    catch (err) {
         res.status(400).json(err.message);
     }
 };
@@ -176,10 +179,20 @@ export const deleteProduct = (req, res) => {
                                     .json({message: "Forbidden : You don't have access"});
                             } else {
                                 console.log("destroying");
+                                if (product.owner_user_id == user.id) {
+                                    const images = await Image.findAll({
+                                        where: {
+                                            [Op.and]: [{product_id: req.params.productId}],
+                                        },
+                                    });
+                                    for (const image of images) {
+                                        await deleteFile(image.file_name);
+                                        Image.destroy({ where :{image_id:image.dataValues.image_id}})
+                                    }
+                                }
                                 Product.destroy({
                                     where: {id: req.params.productId},
                                 });
-
                                 return res.send(204);
                             }
                         }
