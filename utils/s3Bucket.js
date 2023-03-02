@@ -10,8 +10,6 @@ dotenv.config();
 const bucketName = process.env.AWS_BUCKET_NAME;
 const region = process.env.AWS_BUCKET_REGION;
 
-console.log(bucketName, region, accessKeyId, secretAccessKey);
-
 const s3Client = new S3Client({
     region
 });
