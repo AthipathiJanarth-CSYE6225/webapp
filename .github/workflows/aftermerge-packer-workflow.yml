@@ -3,8 +3,6 @@ on:
   push:
     branches: [main]
 env:
-  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-  DB_NAME: ${{ secrets.DB_NAME }}
   AMI_USER: ${{ secrets.AMI_USER }}
 
 jobs:
@@ -13,11 +11,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: create env
-        run: echo "${{ secrets.WEBAPP_ENV }}" > .env
-
-      - name: display file
-        run: echo "version=$(cat .env)" >> $GITHUB_OUTPUT
 
       - name: Clean install
         run: npm ci
