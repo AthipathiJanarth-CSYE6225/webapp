@@ -3,6 +3,7 @@
 sleep 30
 
 sudo yum update -y
+sudo yum upgrade -y
 
 #install node version 16
 sudo yum install -y gcc-c++ make
