@@ -31,4 +31,6 @@ jobs:
       - name: Packer Validate
         run: packer validate .
 
+      - name: Packer Build
+        run: packer build .
 
