@@ -179,7 +179,7 @@ export const addImage =  (req, res) => {
                         res.status(400).json({message: "Upload proper image"});
                     } else {
                         const fileName = `${uuidv4()} ${req.file.originalname}`;
-                        const fileBuffer = req.file.fileBuffer;
+                        const fileBuffer = req.file.buffer;
                         try {
                             const product = await Product.findOne({
                                 where: {id: req.params.productId},
