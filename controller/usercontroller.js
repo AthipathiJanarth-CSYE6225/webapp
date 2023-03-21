@@ -2,9 +2,13 @@ import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import emailValidator from "email-validator";
 
+import statsDClient from 'statsd-client';
+const statsDclient = new statsDClient({host: 'localhost', port: 8125, debug: true});
+
 //POST - Create new User
 export const createUser = (req, res) => {
-  console.log("create user /v1/user/ has been hit");
+  console.log("Endpoint post Create user /v1/user/ has been hit");
+  statsDclient.increment("/v1/user/")
   const { first_name, last_name, username, password } = req.body;
   try {
     //Check if the auto-generating field are present
@@ -72,7 +76,8 @@ export const createUser = (req, res) => {
 
 //GET - Retrieve User Details
 export const retrieveUser = (req, res) => {
-  console.log("Endpoint get /v1/user/{userId} has been hit");
+  console.log("Endpoint get RetrieveUser /v1/user/{userId} has been hit");
+  statsDclient.increment("get /v1/user/{userId}")
   //Get basic auth
   const authUser = req.authUser;
   try {
@@ -128,7 +133,8 @@ export const retrieveUser = (req, res) => {
 
 //PUT - Update User Details
 export const updateUser = (req, res) => {
-  console.log("Endpoint put /v1/user/{userId} has been hit");
+  console.log("Endpoint put UpdateUser /v1/user/{userId} has been hit");
+  statsDclient.increment("put /v1/user/{userId}")
   //Get basic auth
   const first_name  = req.body.first_name;
   const last_name =req.body.last_name;
