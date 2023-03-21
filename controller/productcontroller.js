@@ -7,9 +7,13 @@ import Image from "../models/Image.js";
 import {Op} from "sequelize";
 import {deleteFile} from "../utils/s3Bucket.js";
 
+import statsDClient from 'statsd-client';
+const statsDclient = new statsDClient({host: 'localhost', port: 8125, debug: true});
+
 //POST - Create new Product
 export const createProduct = (req, res) => {
-    console.log("create product /v1/product has been hit");
+    console.log("Endpoint post create product /v1/product has been hit");
+    statsDclient.increment("/v1/product")
     const {
         name,
         description,
@@ -121,7 +125,8 @@ export const createProduct = (req, res) => {
 
 //GET - Retrieve Product Details
 export const retrieveProduct = (req, res) => {
-    console.log("Endpoint get /v1/product/{productId} has been hit");
+    console.log("Endpoint get Retrieve product /v1/product/{productId} has been hit");
+    statsDclient.increment("get /v1/product/{productId}")
     try {
         Product.findOne({
             where: { id: req.params.productId },
@@ -142,7 +147,8 @@ export const retrieveProduct = (req, res) => {
 
 //DELETE - Delete Product
 export const deleteProduct = (req, res) => {
-    console.log("delete product /v1/product/{productId} has been hit");
+    console.log("Endpoint delete product /v1/product/{productId} has been hit");
+    statsDclient.increment("delete /v1/product/{productId}")
     const authUser = req.authUser;
     try {
         //Check if the Username is present
@@ -206,7 +212,8 @@ export const deleteProduct = (req, res) => {
 }
 //PUT - UPDATE Product
 export const updatesProduct = (req, res) => {
-    console.log("update product /v1/product/{productId} has been hit");
+    console.log("Endpoint put update product /v1/product/{productId} has been hit");
+    statsDclient.increment("put /v1/product/{productId}")
     const {
         name,
         description,
@@ -326,7 +333,8 @@ export const updatesProduct = (req, res) => {
 
 //PATCH - UPDATE Product
 export const updateProduct = (req, res) => {
-    console.log("update product /v1/product/{productId} has been hit");
+    console.log("Endpoint Patch update product /v1/product/{productId} has been hit");
+    statsDclient.increment("patch /v1/product/{productId}")
     const {
         name,
         description,

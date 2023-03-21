@@ -5,10 +5,14 @@ import { v4 as uuidv4 } from "uuid";
 import { uploadFile, deleteFile } from "../utils/s3Bucket.js";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
+import statsDClient from 'statsd-client';
+const statsDclient = new statsDClient({host: 'localhost', port: 8125, debug: true});
 
+
+//GET-ALL Images
 export const getAllImages =  (req, res) => {
-    console.log()
-    console.log("getAllImages has been hit");
+    console.log("Endpoint getAllImages /v1/product/{product_id}/image has been hit");
+    statsDclient.increment("get /v1/product/{product_id}/image")
     const authUser = req.authUser;
     try {
         //Check if the Username is present
@@ -59,7 +63,8 @@ export const getAllImages =  (req, res) => {
     }
 }
 export const getImage = (req, res) => {
-    console.log("get image has been hit");
+    console.log("Endpoint get image /v1/product/{product_id}/image/{image_id} has been hit");
+    statsDclient.increment("get /v1/product/{product_id}/image/{image_id}")
     const authUser = req.authUser;
     try {
         //Check if the Username is present
@@ -109,7 +114,8 @@ export const getImage = (req, res) => {
     }
 }
 export const deleteImage =  (req, res) => {
-    console.log("Delete Image has been hit")
+    console.log("Endpoint Delete Image /v1/product/{product_id}/image/{image_id} has been hit")
+    statsDclient.increment("delete /v1/product/{product_id}/image/{image_id}")
     const authUser = req.authUser;
     try {
         //Check if the Username is present
@@ -158,7 +164,8 @@ export const deleteImage =  (req, res) => {
     }
 }
 export const addImage =  (req, res) => {
-    console.log("Add Image has been hit");
+    console.log("Endpoint Upload Image /v1/product/{product_id}/image has been hit");
+    statsDclient.increment("post /v1/product/{product_id}/image")
     const authUser = req.authUser;
     try {
         //Check if the Username is present
@@ -201,6 +208,7 @@ export const addImage =  (req, res) => {
                                 }
                             }
                         } catch (err) {
+                            console.error(err)
                             return res.status(500).json({ message: err.message });
                         }
                     }
