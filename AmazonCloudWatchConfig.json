@@ -8,12 +8,12 @@
       "files": {
         "collect_list": [
           {
-            "file_path": "/home/ec2-user/logs/webapp-err.log",
+            "file_path": "/home/ec2-user/webapp/logs/webapp-err.log",
             "log_group_name": "webapp-err.log",
             "log_stream_name": "webapp-error-logs"
           },
           {
-            "file_path": "/home/ec2-user/logs/webapp-out.log",
+            "file_path": "/home/ec2-user/webapp/logs/webapp-out.log",
             "log_group_name": "webapp-out.log",
             "log_stream_name": "webapp-out-logs"
           }
