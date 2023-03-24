@@ -1,4 +1,4 @@
-# CSYE 6225 Assignment 05
+# CSYE 6225 Assignment 06
 
 - This RESTful API Endpoints are used to create, update and retrieve user detail from MySQL database using Node.js
 
