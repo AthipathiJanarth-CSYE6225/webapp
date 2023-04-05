@@ -39,3 +39,6 @@ sudo pm2 list
 
 #Install cloud watch agent
 sudo yum install amazon-cloudwatch-agent -y
+
+#Start Cloud-Watch agent
+sudo systemctl start amazon-cloudwatch-agent.service
