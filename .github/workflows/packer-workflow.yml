@@ -31,5 +31,15 @@ jobs:
       - name: Packer Validate
         run: packer validate .
 
+      - name: Packer Build
+        run: packer build -machine-readable .
+          LATEST_AMI_ID=$(packer build -machine-readable . | awk -F, '$0 ~/artifact,0,id/ {print $6}')
+
+      - name: Get Launch Template ID
+        run: |
+          LAUNCH_TEMPLATE_NAME="asg_launch_config"
+          LATEST_LAUNCH_TEMPLATE_ID=$(aws ec2 describe-launch-templates --filters "Name=launch-template-name,Values=$LAUNCH_TEMPLATE_NAME" --query "LaunchTemplates[0].LaunchTemplateId" --output text)
+          aws ec2 create-launch-template-version --launch-template-id $LATEST_LAUNCH_TEMPLATE_ID --source-version $LATEST_LAUNCH_TEMPLATE_ID --image-id $LATEST_AMI_ID --region ${{ secrets.AWS_REGION }}
+
 
 
