@@ -32,8 +32,7 @@ jobs:
         run: packer validate .
 
       - name: Packer Build
-        run: packer build -machine-readable .
-          LATEST_AMI_ID=$(packer build -machine-readable . | awk -F, '$0 ~/artifact,0,id/ {print $6}')
+        run: LATEST_AMI_ID=$(packer build -machine-readable . | awk -F, '$0 ~/artifact,0,id/ {print $6}')
 
       - name: Get Launch Template ID
         run: |
