@@ -32,14 +32,19 @@ jobs:
         run: packer validate .
 
       - name: Packer Build
-        run: LATEST_AMI_ID=$(packer build -machine-readable . | awk -F, '$0 ~/artifact,0,id/ {print $6}')
+        run: LATEST_AMI_ID="ami-0c4b782e4bc4eb675"
 
       - name: Get Launch Configuration Details
-        run: LC_DETAILS=$(aws autoscaling describe-launch-configurations --launch-configuration-names $$LATEST_LAUNCH_TEMPLATE_ID)
+        run: LC_DETAILS=$(aws autoscaling describe-launch-configurations --launch-configuration-names $LAUNCH_TEMPLATE_NAME)
           LC_CONFIG=$(echo $LC_DETAILS | jq 'del(.LaunchConfigurations[].ImageId)')
 
+      - name: Generate Unique Name
+        run: |
+          TIMESTAMP=$(date '+%Y%m%d%H%M%S')
+          NEW_LAUNCH_CONFIG_NAME="my-launch-config-${TIMESTAMP}"
+
       - name: Create Launch Configuration Version
-        run: aws autoscaling create-launch-configuration --launch-configuration-name $NEW_LC_NAME --launch-configuration $LC_CONFIG --image-id $LATEST_AMI_ID
+        run: aws autoscaling create-launch-configuration --launch-configuration-name $NEW_LAUNCH_CONFIG_NAME --launch-configuration $LC_CONFIG --image-id $LATEST_AMI_ID
 
       - name: Update Auto Scaling Group
         run: aws autoscaling update-auto-scaling-group --auto-scaling-group-name ${{secrets.AUTO_SCALING_GROUP_NAME}} --launch-template LaunchTemplateName=${{secrets.LT_NAME}},Version='$Latest'
