@@ -33,12 +33,12 @@ jobs:
 
       - name: Packer Build
         run: LATEST_AMI_ID=$(packer build -machine-readable . | awk -F, '$0 ~/artifact,0,id/ {print $6}')
-              echo "${{ LATEST_AMI_ID }}"
+              echo $LATEST_AMI_ID
 
       - name: Get Launch Template ID
         run: |
           LATEST_LAUNCH_TEMPLATE_ID=$(aws ec2 describe-launch-templates --filters "Name=launch-template-name,Values=${{ secrets.LAUNCH_TEMPLATE_NAME}}" --query "LaunchTemplates[0].LaunchTemplateId" --output text)
-          echo "${{LATEST_LAUNCH_TEMPLATE_ID }}"
+          echo $LATEST_LAUNCH_TEMPLATE_ID
           aws ec2 create-launch-template-version --launch-template-id $LATEST_LAUNCH_TEMPLATE_ID --source-version '$Latest' --launch-template-data '{"ImageId":"'"$LATEST_AMI_ID"'"}'  --region ${{ secrets.AWS_REGION }}
           
           aws autoscaling update-auto-scaling-group --auto-scaling-group-name ${{secrets.AUTO_SCALING_GROUP_NAME}} --launch-template LaunchTemplateName=${{secrets.LT_NAME}},Version='$Latest'
