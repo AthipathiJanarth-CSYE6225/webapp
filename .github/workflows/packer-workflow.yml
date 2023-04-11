@@ -42,7 +42,7 @@ jobs:
         run: |
           TIMESTAMP=$(date '+%Y%m%d%H%M%S')
           NEW_LAUNCH_CONFIG_NAME="my-launch-config-$(date +%Y%m%d%H%M%S)"
-          echo $NEW_LAUNCH_CONFIG_NAM
+          echo $NEW_LAUNCH_CONFIG_NAME
 
       - name: Create Launch Configuration Version
         run: aws autoscaling create-launch-configuration --launch-configuration-name $NEW_LAUNCH_CONFIG_NAME --launch-configuration $LC_CONFIG --image-id $LATEST_AMI_ID
