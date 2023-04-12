@@ -32,7 +32,7 @@ jobs:
         run: packer validate .
 
       - name: Packer Build
-        run: LATEST_AMI_ID="ami-0c4b782e4bc4eb675"
+        run: LATEST_AMI_ID=ami-0c4b782e4bc4eb675
              aws ec2 create-launch-template-version --launch-template-id ${{secrets.LAUNCH_TEMPLATE_NAME}} --source-version '$Latest' --launch-template-data '{"ImageId":"'"$LATEST_AMI_ID"'"}'
 
       - name: Create Launch Template Version
