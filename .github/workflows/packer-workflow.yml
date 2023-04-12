@@ -3,8 +3,7 @@ on:
   pull_request:
     branches: [main]
 env:
-  AMI_USER: ${{ secrets.AMI_USER }}
-  LATEST_AMI_ID: ""
+  AMI_USER: ${{ secrets.AMI_USER }
 
 jobs:
   packer-checks:
@@ -31,15 +30,3 @@ jobs:
 
       - name: Packer Validate
         run: packer validate .
-
-      - name: Packer Build
-        run: echo "LATEST_AMI_ID=$(packer build -machine-readable . | awk -F, '$0 ~/artifact,0,id/ {print $6}')" >> $GITHUB_ENV
-
-      - name: Create Launch Template Version
-        run: aws ec2 create-launch-template-version --launch-template-id ${{secrets.LAUNCH_TEMPLATE_ID}} --source-version '$Latest' --launch-template-data '{"ImageId":"'$(echo ${{env.LATEST_AMI_ID}} | sed 's/.*://')'"}'
-
-      - name: Update Auto Scaling Group
-        run: aws autoscaling update-auto-scaling-group --auto-scaling-group-name ${{secrets.AUTO_SCALING_GROUP_NAME}} --launch-template LaunchTemplateName=${{secrets.LAUNCH_TEMPLATE_NAME}},Version='$Latest'
-
-      - name: Start Instance Refresh
-        run: aws autoscaling start-instance-refresh --auto-scaling-group-name ${{secrets.AUTO_SCALING_GROUP_NAME}}
