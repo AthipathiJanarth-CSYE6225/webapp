@@ -35,7 +35,7 @@ jobs:
         run: LATEST_AMI_ID="ami-0c4b782e4bc4eb675"
 
       - name: Create Launch Template Version
-        run: echo $LATEST_AMI_ID
+        run: $LATEST_AMI_ID  --output text
 #          aws ec2 create-launch-template-version --launch-template-id ${{secrets.LAUNCH_TEMPLATE_NAME}} --source-version '$Latest' --launch-template-data '{"ImageId":"'"$ID"'"}'
 
       - name: Update Auto Scaling Group
