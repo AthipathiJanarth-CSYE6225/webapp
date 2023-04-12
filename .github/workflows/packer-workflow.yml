@@ -34,25 +34,8 @@ jobs:
       - name: Packer Build
         run: LATEST_AMI_ID="ami-0c4b782e4bc4eb675"
 
-      - name: Get Launch Configuration Details
-        run: LC_DETAILS=$(aws autoscaling describe-launch-configurations --launch-configuration-names $LAUNCH_TEMPLATE_NAME)
-          LC_CONFIG=$(echo $LC_DETAILS | jq 'del(.LaunchConfigurations[].ImageId)')
-
-      - name: Generate Unique Name
-        run: |
-          TIMESTAMP=$(date '+%Y%m%d%H%M%S')
-          NEW_LAUNCH_CONFIG_NAME="my-launch-config-$(date +%Y%m%d%H%M%S)"
-          echo $NEW_LAUNCH_CONFIG_NAME
-
-      - name: Create Launch Configuration Version
-        run: aws autoscaling create-launch-configuration \
-          --launch-configuration-name $NEW_LAUNCH_CONFIG_NAME \
-          --image-id $LATEST_AMI_ID \
-          --instance-type $(echo $LC_CONFIG | jq -r '.LaunchConfigurations[0].InstanceType') \
-          --key-name $(echo $LC_CONFIG | jq -r '.LaunchConfigurations[0].KeyName') \
-          --user-data $(echo $LC_CONFIG | jq -r '.LaunchConfigurations[0].UserData' | base64 --decode) \
-          --security-groups $(echo $LC_CONFIG | jq -r '.LaunchConfigurations[0].SecurityGroups[0]') \
-          --iam-instance-profile $(echo $LC_CONFIG | jq -r '.LaunchConfigurations[0].IamInstanceProfile')
+      - name: Create Launch Template Version
+        run: aws ec2 create-launch-template-version --launch-template-id ${{secrets.LAUNCH_TEMPLATE_NAME}} --source-version '$Latest' --launch-template-data '{"ImageId":"'"$LATEST_AMI_ID"'"}'
 
       - name: Update Auto Scaling Group
         run: aws autoscaling update-auto-scaling-group --auto-scaling-group-name ${{secrets.AUTO_SCALING_GROUP_NAME}} --launch-template LaunchTemplateName=${{secrets.LT_NAME}},Version='$Latest'
