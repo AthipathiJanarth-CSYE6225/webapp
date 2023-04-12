@@ -45,7 +45,7 @@ jobs:
           echo $NEW_LAUNCH_CONFIG_NAME
 
       - name: Create Launch Configuration Version
-        run: aws autoscaling create-launch-configuration --launch-configuration-name $NEW_LAUNCH_CONFIG_NAME --launch-configuration $LC_CONFIG --image-id $LATEST_AMI_ID
+        run: aws autoscaling create-launch-configuration --launch-configuration-name $NEW_LAUNCH_CONFIG_NAME --image-id $LATEST_AMI_ID
 
       - name: Update Auto Scaling Group
         run: aws autoscaling update-auto-scaling-group --auto-scaling-group-name ${{secrets.AUTO_SCALING_GROUP_NAME}} --launch-template LaunchTemplateName=${{secrets.LT_NAME}},Version='$Latest'
