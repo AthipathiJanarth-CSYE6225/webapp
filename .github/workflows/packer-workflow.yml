@@ -4,7 +4,7 @@ on:
     branches: [main]
 env:
   AMI_USER: ${{ secrets.AMI_USER }}
-  LATEST_AMI_ID: ami-0c4b782e4bc4eb675
+  LATEST_AMI_ID: ""
 
 jobs:
   packer-checks:
@@ -33,9 +33,7 @@ jobs:
         run: packer validate .
 
       - name: Packer Build
-        run: AMI_ID="ami-0c4b782e4bc4eb675"
-          echo "::set-output name=ami_id::$AMI_ID"
-        id: packer-build
+        run: echo "LATEST_AMI_ID=ami-0c4b782e4bc4eb675" >> $GITHUB_ENV
 
       - name: Create Launch Template Version
         run: aws ec2 create-launch-template-version --launch-template-id ${{secrets.LAUNCH_TEMPLATE_NAME}} --source-version '$Latest' --launch-template-data '{"ImageId":"'"${{ env.LATEST_AMI_ID}}"'"}'
