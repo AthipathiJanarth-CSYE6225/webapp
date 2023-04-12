@@ -4,8 +4,7 @@ on:
     branches: [main]
 env:
   AMI_USER: ${{ secrets.AMI_USER }}
-  LATEST_AMI_ID: ami-0313f9c461b09a58e
-  AMI_STATE: ""
+  LATEST_AMI_ID: ""
 
 jobs:
   packer-checks:
@@ -33,16 +32,8 @@ jobs:
       - name: Packer Validate
         run: packer validate .
 
-#      - name: Packer Build
-#        run: echo "LATEST_AMI_ID=$(packer build -machine-readable . | awk -F, '$0 ~/artifact,0,id/ {print $6}')" >> $GITHUB_ENV
-
-      - name: Check AMI availability
-        run: |
-          echo "AMI_STATE=$(aws ec2 describe-images --image-ids ${{env.LATEST_AMI_ID}}  --query 'Images[0].State')" >> $GITHUB_ENV
-          if [ "${{env.AMI_STATE}}" != "available" ]; then
-            echo "AMI is not available"
-            exit 1
-          fi
+      - name: Packer Build
+        run: echo "LATEST_AMI_ID=$(packer build -machine-readable . | awk -F, '$0 ~/artifact,0,id/ {print $6}')" >> $GITHUB_ENV
 
       - name: Create Launch Template Version
         run: aws ec2 create-launch-template-version --launch-template-id ${{secrets.LAUNCH_TEMPLATE_ID}} --source-version '$Latest' --launch-template-data '{"ImageId":"'$(echo ${{env.LATEST_AMI_ID}} | sed 's/.*://')'"}'
