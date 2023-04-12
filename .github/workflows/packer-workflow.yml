@@ -33,8 +33,6 @@ jobs:
       - name: Packer Validate
         run: packer validate .
 
-#      - name: Packer Build
-#        run: echo "LATEST_AMI_ID=$(packer build -machine-readable . | awk -F, '$0 ~/artifact,0,id/ {print $6}')" >> $GITHUB_ENV
 
       - name: Check AMI availability
         run: |
