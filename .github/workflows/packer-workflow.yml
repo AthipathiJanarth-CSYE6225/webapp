@@ -35,11 +35,6 @@ jobs:
         run: LATEST_AMI_ID="ami-0c4b782e4bc4eb675"
 
       - name: Create Launch Template Version
-        run: $LATEST_AMI_ID  --output text
-#          aws ec2 create-launch-template-version --launch-template-id ${{secrets.LAUNCH_TEMPLATE_NAME}} --source-version '$Latest' --launch-template-data '{"ImageId":"'"$ID"'"}'
+        run: aws ec2 create-launch-template-version --launch-template-id ${{secrets.LAUNCH_TEMPLATE_NAME}} --source-version '$Latest' --launch-template-data '{"ImageId":"'"$LATEST_AMI_ID"'"}'
 
-      - name: Update Auto Scaling Group
-        run: aws autoscaling update-auto-scaling-group --auto-scaling-group-name ${{secrets.AUTO_SCALING_GROUP_NAME}} --launch-template LaunchTemplateName=${{secrets.LT_NAME}},Version='$Latest'
-
-      - name: Start Instance Refresh
-        run: aws autoscaling start-instance-refresh --auto-scaling-group-name ${{secrets.AUTO_SCALING_GROUP_NAME}}
+      
