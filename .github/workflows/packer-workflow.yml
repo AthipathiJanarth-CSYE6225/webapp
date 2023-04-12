@@ -33,12 +33,13 @@ jobs:
         run: packer validate .
 
       - name: Packer Build
-        run: $env.LATEST_AMI_ID="ami-0c4b782e4bc4eb675"
+        run: LATEST_AMI_ID="ami-0c4b782e4bc4eb675"
+          echo "::set-output name=ami_id::$LATEST_AMI_ID"
+        id: packer-build
 
       - name: Create Launch Template Version
-        run: ID=$(aws ec2 describe-images --owners self --query 'reverse(sort_by(Images,&CreationDate))[0].ImageId' --output text)
-          echo "AMI_ID=$ID" >> $GITHUB_OUTPUT
-          aws ec2 create-launch-template-version --launch-template-id ${{secrets.LAUNCH_TEMPLATE_NAME}} --source-version '$Latest' --launch-template-data '{"ImageId":"'"$ID"'"}'
+        run: echo [${{ needs.packer_build.outputs.ami_id }}]
+#        aws ec2 create-launch-template-version --launch-template-id ${{secrets.LAUNCH_TEMPLATE_NAME}} --source-version '$Latest' --launch-template-data '{"ImageId":"'"${{ needs.packer_build.outputs.ami_id }}"'"}'
 
 #      - name: Update Auto Scaling Group
 #        run: aws autoscaling update-auto-scaling-group --auto-scaling-group-name ${{secrets.AUTO_SCALING_GROUP_NAME}} --launch-template LaunchTemplateName=${{secrets.LT_NAME}},Version='$Latest'
