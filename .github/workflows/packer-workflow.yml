@@ -38,7 +38,7 @@ jobs:
 
       - name: Check AMI availability
         run: |
-          echo "AMI_STATE=$(aws ec2 describe-images --image-ids $(echo ${{env.LATEST_AMI_ID}} | sed 's/.*://') --query 'Images[0].State')" >> $GITHUB_ENV
+          echo "AMI_STATE=$(aws ec2 describe-images --image-ids ${{env.LATEST_AMI_ID}}  --query 'Images[0].State')" >> $GITHUB_ENV
           if [ "${{env.AMI_STATE}}" != "available" ]; then
             echo "AMI is not available"
             exit 1
