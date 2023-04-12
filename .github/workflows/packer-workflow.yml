@@ -37,7 +37,7 @@ jobs:
         id: packer-build
 
       - name: Create Launch Template Version
-        run: echo [${{ needs.packer_build.outputs.ami_id }}]
+        run: echo "${{ needs.packer_build.outputs.ami_id }}"
 #        aws ec2 create-launch-template-version --launch-template-id ${{secrets.LAUNCH_TEMPLATE_NAME}} --source-version '$Latest' --launch-template-data '{"ImageId":"'"${{ needs.packer_build.outputs.ami_id }}"'"}'
 
 #      - name: Update Auto Scaling Group
