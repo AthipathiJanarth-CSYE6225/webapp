@@ -33,7 +33,7 @@ jobs:
         run: packer validate .
 
       - name: Packer Build
-        run: echo "LATEST_AMI_ID=ami-0c4b782e4bc4eb675" >> $GITHUB_ENV
+        run: echo "LATEST_AMI_ID=$(packer build -machine-readable . | awk -F, '$0 ~/artifact,0,id/ {print $6}')" >> $GITHUB_ENV
 
       - name: Create Launch Template Version
         run: aws ec2 create-launch-template-version --launch-template-id ${{secrets.LAUNCH_TEMPLATE_ID}} --source-version '$Latest' --launch-template-data '{"ImageId":"'"${{ env.LATEST_AMI_ID}}"'"}'
