@@ -4,7 +4,7 @@ on:
     branches: [main]
 env:
   AMI_USER: ${{ secrets.AMI_USER }}
-  LATEST_AMI_ID: *:ami-0313f9c461b09a58e
+  LATEST_AMI_ID: ami-0313f9c461b09a58e
   AMI_STATE: ""
 
 jobs:
@@ -33,6 +33,8 @@ jobs:
       - name: Packer Validate
         run: packer validate .
 
+#      - name: Packer Build
+#        run: echo "LATEST_AMI_ID=$(packer build -machine-readable . | awk -F, '$0 ~/artifact,0,id/ {print $6}')" >> $GITHUB_ENV
 
       - name: Check AMI availability
         run: |
