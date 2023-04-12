@@ -5,6 +5,7 @@ on:
 env:
   AMI_USER: ${{ secrets.AMI_USER }}
   LATEST_AMI_ID: ""
+  AMI_STATE: ""
 
 jobs:
   packer-checks:
@@ -37,8 +38,8 @@ jobs:
 
       - name: Check AMI availability
         run: |
-          ami_state=$(aws ec2 describe-images --image-ids $(echo ${{env.LATEST_AMI_ID}} | sed 's/.*://') --query 'Images[0].State')
-          if [ "$ami_state" != "available" ]; then
+          echo "AMI_STATE=$(aws ec2 describe-images --image-ids $(echo ${{env.LATEST_AMI_ID}} | sed 's/.*://') --query 'Images[0].State')" >> $GITHUB_ENV
+          if [ "${{env.AMI_STATE}}" != "available" ]; then
             echo "AMI is not available"
             exit 1
           fi
