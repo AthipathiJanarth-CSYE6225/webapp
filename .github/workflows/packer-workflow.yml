@@ -35,6 +35,14 @@ jobs:
       - name: Packer Build
         run: echo "LATEST_AMI_ID=$(packer build -machine-readable . | awk -F, '$0 ~/artifact,0,id/ {print $6}')" >> $GITHUB_ENV
 
+      - name: Check AMI availability
+        run: |
+          ami_state=$(aws ec2 describe-images --image-ids $(echo ${{env.LATEST_AMI_ID}} | sed 's/.*://') --query 'Images[0].State')
+          if [ "$ami_state" != "available" ]; then
+            echo "AMI is not available"
+            exit 1
+          fi
+
       - name: Create Launch Template Version
         run: aws ec2 create-launch-template-version --launch-template-id ${{secrets.LAUNCH_TEMPLATE_ID}} --source-version '$Latest' --launch-template-data '{"ImageId":"'$(echo ${{env.LATEST_AMI_ID}} | sed 's/.*://')'"}'
 
