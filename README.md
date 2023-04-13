@@ -1,4 +1,4 @@
-# CSYE 6225 Assignment 07
+# CSYE 6225 Assignment 10
 
 - This RESTful API Endpoints are used to create, update and retrieve user detail from MySQL database using Node.js
 
@@ -21,3 +21,5 @@
 - For AWS
 - On merging a pull request, the github actions will run and create an ami using packer
 - Copy the ami id and run infrastructure code which will create an Ec2 instance
+- Run this command `autocannon http://prod.athipathicsye.me/v1/product/1 -d 10 -c 500 -w 3` for testing the Load 
+- Add the certificate to your aws account using "aws acm import-certificate --certificate fileb://prod_athipathicsye_me.crt --certificate-chain fileb://prod_athipathicsye_me.ca-bundle --private-key fileb://key.key --profile prod"
