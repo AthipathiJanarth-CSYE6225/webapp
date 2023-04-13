@@ -16,6 +16,9 @@ jobs:
       - name: Clean install
         run: npm ci
 
+      - name: Run Unit Test
+        run: npm test
+
       - name: Zip Files
         run: zip -r webapp.zip .
 
