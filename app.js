@@ -21,9 +21,9 @@ app.get("/healthz", (req, res) => {
   console.log("Enpoint /healthz has been hit");
   res.status(200).send("server responds with 200 OK if it is healhty.");
 });
-app.get("/health", (req, res) => {
-  statsDclient.increment("/healthz");
-  console.log("Enpoint /healthz has been hit");
+app.get("/athipathi", (req, res) => {
+  statsDclient.increment("/athipathi");
+  console.log("Enpoint /athipathi has been hit");
   res.status(200).send("server responds with 200 OK if it is healhty.");
 });
 
